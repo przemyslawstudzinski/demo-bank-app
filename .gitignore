@@ -1,0 +1,33 @@
+.gradle
+/build/
+/out/
+!gradle/wrapper/gradle-wrapper.jar
+.gradletasknamecache
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# IntelliJ IDEA #
+.idea
+*.iws
+*.iml
+*.ipr
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+
