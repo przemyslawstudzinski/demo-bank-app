@@ -1,6 +1,7 @@
 package org.banana.bank.service;
 
 import org.banana.bank.domain.Transaction;
+import org.banana.bank.exception.BadTokenException;
 import org.banana.bank.repository.UserRepository;
 import org.jboss.aerogear.security.otp.Totp;
 import org.jboss.aerogear.security.otp.api.Base32;
@@ -12,6 +13,8 @@ import org.banana.bank.domain.TransactionType;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import static org.banana.bank.constant.ValidationMessages.BAD_TOKEN;
+
 @Service
 public class UserService {
 
@@ -20,16 +23,9 @@ public class UserService {
 
     public User increaseBalance(UUID userId, BigDecimal value) {
         User user = userRepository.getOne(userId);
-        BigDecimal newValue = user.getBalance().add(value);
+        BigDecimal newBalance = user.getBalance().add(value);
 
-        Transaction transaction = new Transaction();
-        transaction.setType(TransactionType.INCREASE);
-        transaction.setUser(user);
-        transaction.setValue(value);
-
-        user.setBalance(newValue);
-        user.addTransaction(transaction);
-        return userRepository.save(user);
+        return updateBalance(value, user, newBalance, TransactionType.INCREASE);
     }
 
     public String createToken(UUID userId) {
@@ -41,20 +37,26 @@ public class UserService {
         return generator.now();
     }
 
-    public void decreaseBalance(UUID userId, BigDecimal value, String token) {
+    public void decreaseBalance(UUID userId, BigDecimal value, String token) throws BadTokenException {
         User user = userRepository.getOne(userId);
         Totp generator = new Totp(user.getSeedOfToken());
         if (generator.verify(token)) {
-            BigDecimal newValue = user.getBalance().subtract(value);
+            BigDecimal newBalance = user.getBalance().subtract(value);
 
-            Transaction transaction = new Transaction();
-            transaction.setType(TransactionType.DECREASE);
-            transaction.setUser(user);
-            transaction.setValue(value);
-
-            user.setBalance(newValue);
-            user.addTransaction(transaction);
-            userRepository.save(user);
+            updateBalance(value, user, newBalance, TransactionType.DECREASE);
+        } else {
+            throw new BadTokenException(BAD_TOKEN);
         }
+    }
+
+    private User updateBalance(BigDecimal value, User user, BigDecimal newBalance, TransactionType type) {
+        Transaction transaction = new Transaction();
+        transaction.setType(type);
+        transaction.setUser(user);
+        transaction.setValue(value);
+
+        user.setBalance(newBalance);
+        user.addTransaction(transaction);
+        return userRepository.save(user);
     }
 }

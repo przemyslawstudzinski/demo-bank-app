@@ -2,10 +2,12 @@ package org.banana.bank.web;
 
 import org.banana.bank.dto.DecreaseDto;
 import org.banana.bank.dto.TokenDto;
+import org.banana.bank.exception.ValidationException;
 import org.banana.bank.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,7 @@ import org.banana.bank.mapper.UserMapper;
 import org.banana.bank.service.UserService;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,6 +37,7 @@ public class UserController {
     private UserService userService;
 
     private UserMapper userMapper = UserMapper.INSTANCE;
+
     private TransactionMapper transactionMapper = TransactionMapper.INSTANCE;
 
     @RequestMapping(value = "/balance/user/{userId}", method = RequestMethod.GET)
@@ -48,7 +52,9 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public void increaseBalance(@PathVariable("userId") UUID userId,
-                                @RequestBody BalanceDto balanceDto) {
+                                @RequestBody @Valid BalanceDto balanceDto,
+                                BindingResult bindingResult) {
+        checkBindingResult(bindingResult);
         userService.increaseBalance(userId, balanceDto.getValue());
     }
 
@@ -72,7 +78,15 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public void decreaseBalance(@PathVariable("userId") UUID userId,
-                                @RequestBody DecreaseDto decreaseDto) {
+                                @RequestBody @Valid DecreaseDto decreaseDto,
+                                BindingResult bindingResult) {
+        checkBindingResult(bindingResult);
         userService.decreaseBalance(userId, decreaseDto.getValue(), decreaseDto.getToken());
+    }
+
+    private void checkBindingResult(BindingResult bindingResult) throws ValidationException {
+        if (bindingResult.hasErrors()) {
+            throw new ValidationException(bindingResult);
+        }
     }
 }

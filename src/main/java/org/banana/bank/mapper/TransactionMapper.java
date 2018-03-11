@@ -7,7 +7,7 @@ import org.banana.bank.dto.TransactionDto;
 
 import java.util.List;
 
-@Mapper
+@Mapper(uses = TransactionTypeMapper.class)
 public interface TransactionMapper {
 
     TransactionMapper INSTANCE = Mappers.getMapper(TransactionMapper.class);
