@@ -22,7 +22,7 @@ public class User extends BaseEntity {
     @Setter
     private String username;
 
-    @Column(name = "balance")
+    @Column(name = "balance", nullable = false)
     @Getter
     @Setter
     private BigDecimal balance;

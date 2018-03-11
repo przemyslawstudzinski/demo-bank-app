@@ -1,8 +1,8 @@
-# BANANA BANK 
+# BANANA BEST BANK 
 
 Banana Best Bank REST spring boot application.
 Application allows check balance, increase and decrease balance and generates one-time passwords using 
-aerogear-otp-java library `https://github.com/aerogear/aerogear-otp-java`. Token is valid 30s. 
+aerogear-otp-java library `https://github.com/aerogear/aerogear-otp-java`. Token is valid about 40s. 
 
 ### App startup
 The application can be started by issuing the following command in the command line:
@@ -15,6 +15,7 @@ on windows:
 ```bash
 .\gradlew clean bootRun
 ```
+Ensure you have correct JAVA_HOME path.
 
 ## Stopping the Service
 To stop the service (when it is running with `gradle bootRun`) use Control-C.
@@ -36,7 +37,8 @@ on windows:
 ```bash
 .\gradlew clean test
 ```
-Ensure path is correct in gradle.properties file.
+Ensure you have correct JAVA_HOME path.
+
 ## API
 
 - `GET /balance/user/<userId>`
