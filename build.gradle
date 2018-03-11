@@ -38,6 +38,8 @@ dependencies {
 	compile 'org.mapstruct:mapstruct-jdk8:1.2.0.Final'
 	compile 'org.mapstruct:mapstruct-processor:1.2.0.Final'
 
+	compile 'org.jboss.aerogear:aerogear-otp-java:1.0.0'
+
 	testCompile 'org.springframework.boot:spring-boot-starter-test'
 }
 

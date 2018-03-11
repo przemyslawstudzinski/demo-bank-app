@@ -1,4 +1,4 @@
-package spring.mvc.example.domain;
+package org.banana.bank.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package spring.mvc.example.domain;
+package org.banana.bank.domain;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -28,10 +28,15 @@ public class User extends BaseEntity {
     private BigDecimal balance;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @OrderBy("created_date ASC")
+    @OrderBy("createdDate ASC")
     @Getter
     @Setter
     private List<Transaction> transactions;
+
+    @Column(name = "seed_of_token")
+    @Getter
+    @Setter
+    private String seedOfToken;
 
     public void addTransaction(Transaction newTransaction) {
         if (null == newTransaction) {
@@ -48,5 +53,4 @@ public class User extends BaseEntity {
         this.transactions.clear();
         this.transactions.addAll(updatedList);
     }
-
 }

@@ -1,15 +1,15 @@
-package spring.mvc.example.domain.enums;
+package org.banana.bank.domain;
 
 import lombok.Getter;
 
-public enum OperationType {
+public enum TransactionType {
     INCREASE("Increase"),
     DECREASE("Decrease");
 
     @Getter
     private String type;
 
-    OperationType(String type) {
+    TransactionType(String type) {
         this.type = type;
     }
 }

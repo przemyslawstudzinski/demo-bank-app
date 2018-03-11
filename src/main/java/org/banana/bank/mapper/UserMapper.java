@@ -1,11 +1,11 @@
-package spring.mvc.example.mapper;
+package org.banana.bank.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 import org.mapstruct.Mapping;
-import spring.mvc.example.domain.User;
-import spring.mvc.example.dto.BalanceDto;
+import org.banana.bank.domain.User;
+import org.banana.bank.dto.BalanceDto;
 
 @Mapper
 public interface UserMapper {

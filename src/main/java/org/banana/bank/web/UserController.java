@@ -1,6 +1,8 @@
-package spring.mvc.example.web;
+package org.banana.bank.web;
 
-import org.jboss.aerogear.security.otp.Totp;
+import org.banana.bank.dto.DecreaseDto;
+import org.banana.bank.dto.TokenDto;
+import org.banana.bank.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -10,13 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import spring.mvc.example.domain.User;
-import spring.mvc.example.dto.BalanceDto;
-import spring.mvc.example.dto.TransactionDto;
-import spring.mvc.example.mapper.TransactionMapper;
-import spring.mvc.example.mapper.UserMapper;
-import spring.mvc.example.repository.UserRepository;
-import spring.mvc.example.service.UserService;
+import org.banana.bank.domain.User;
+import org.banana.bank.dto.BalanceDto;
+import org.banana.bank.dto.TransactionDto;
+import org.banana.bank.mapper.TransactionMapper;
+import org.banana.bank.mapper.UserMapper;
+import org.banana.bank.service.UserService;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -39,7 +40,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public BalanceDto getBalance(@PathVariable("userId") UUID userId) {
-        User user = userRepository.getOne(userId);
+        final User user = userRepository.getOne(userId);
         return userMapper.toBalanceDto(user);
     }
 
@@ -47,7 +48,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public void increaseBalance(@PathVariable("userId") UUID userId,
-                                      @RequestBody BalanceDto balanceDto) {
+                                @RequestBody BalanceDto balanceDto) {
         userService.increaseBalance(userId, balanceDto.getValue());
     }
 
@@ -55,7 +56,23 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<TransactionDto> getHistory(@PathVariable("userId") UUID userId) {
-        User user = userRepository.getOne(userId);
+        final User user = userRepository.getOne(userId);
         return transactionMapper.toTransactionDtos(user.getTransactions());
+    }
+
+    @RequestMapping(value = "/tokens/user/{userId}", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public TokenDto createToken(@PathVariable("userId") UUID userId) {
+        final String token = userService.createToken(userId);
+        return new TokenDto(token);
+    }
+
+    @RequestMapping(value = "/balance/decrease/user/{userId}", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public void decreaseBalance(@PathVariable("userId") UUID userId,
+                                @RequestBody DecreaseDto decreaseDto) {
+        userService.decreaseBalance(userId, decreaseDto.getValue(), decreaseDto.getToken());
     }
 }

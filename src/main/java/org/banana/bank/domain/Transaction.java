@@ -1,12 +1,13 @@
-package spring.mvc.example.domain;
+package org.banana.bank.domain;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import spring.mvc.example.domain.enums.OperationType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -18,11 +19,12 @@ import java.time.LocalDateTime;
 public class Transaction extends BaseEntity {
 
     @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     @Getter
     @Setter
-    private OperationType type;
+    private TransactionType type;
 
-    @Column(name = "value")
+    @Column(name = "value", nullable = false)
     @Getter
     @Setter
     private BigDecimal value;
