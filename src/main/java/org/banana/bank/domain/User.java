@@ -38,6 +38,11 @@ public class User extends BaseEntity {
     @Setter
     private String seedOfToken;
 
+    /**
+     * Allows add new transaction to collection.
+     *
+     * @param newTransaction New Transaction to add
+     */
     public void addTransaction(Transaction newTransaction) {
         if (null == newTransaction) {
             return;

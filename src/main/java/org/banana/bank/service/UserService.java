@@ -15,12 +15,23 @@ import java.util.UUID;
 
 import static org.banana.bank.constant.ValidationMessages.BAD_TOKEN;
 
+/**
+ * Stereotype for business logic layer about Users.
+ */
 @Service
 public class UserService {
 
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Allows increase balance for User.
+     *
+     * @param userId Id of User
+     * @param value increase value
+     *
+     * @return updated User
+     */
     public User increaseBalance(UUID userId, BigDecimal value) {
         User user = userRepository.getOne(userId);
         BigDecimal newBalance = user.getBalance().add(value);
@@ -28,6 +39,13 @@ public class UserService {
         return updateBalance(value, user, newBalance, TransactionType.INCREASE);
     }
 
+    /**
+     * Allows create token.
+     *
+     * @param userId Id of User
+     *
+     * @return token
+     */
     public String createToken(UUID userId) {
         String secret = Base32.random();
         User user = userRepository.getOne(userId);
@@ -37,6 +55,17 @@ public class UserService {
         return generator.now();
     }
 
+    /**
+     * Allows decrease balance for User.
+     *
+     * @param userId Id of User
+     * @param value decrease value
+     * @param token valid token
+     *
+     * @throws BadTokenException when token invalid
+     *
+     * @return updated User
+     */
     public void decreaseBalance(UUID userId, BigDecimal value, String token) throws BadTokenException {
         User user = userRepository.getOne(userId);
         Totp generator = new Totp(user.getSeedOfToken());

@@ -10,6 +10,7 @@ public class TransactionTypeMapper {
      * Get TransactionType object from display name.
      *
      * @param displayName display name of TransactionType
+     *
      * @return TransactionType object
      */
     public TransactionType toTransactionType(String displayName) {
@@ -22,6 +23,8 @@ public class TransactionTypeMapper {
 
     /**
      * Get display name from TransactionType.
+     *
+     * @param type type of transaction.
      *
      * @return display name of TransactionType
      */

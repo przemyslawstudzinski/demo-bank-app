@@ -26,6 +26,9 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Controller responsible for processing requests of Users.
+ */
 @Transactional
 @Controller
 public class UserController {
@@ -40,6 +43,9 @@ public class UserController {
 
     private TransactionMapper transactionMapper = TransactionMapper.INSTANCE;
 
+    /**
+     * Returns the current balance value for User.
+     */
     @RequestMapping(value = "/balance/user/{userId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -48,6 +54,9 @@ public class UserController {
         return userMapper.toBalanceDto(user);
     }
 
+    /**
+     * Allows increase balance operation for User.
+     */
     @RequestMapping(value = "/balance/increase/user/{userId}", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -58,6 +67,9 @@ public class UserController {
         userService.increaseBalance(userId, balanceDto.getValue());
     }
 
+    /**
+     * Returns the history of the transactions for User.
+     */
     @RequestMapping(value = "/history/user/{userId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -66,6 +78,9 @@ public class UserController {
         return transactionMapper.toTransactionDtos(user.getTransactions());
     }
 
+    /**
+     * Allows create one time password that can be used to secure other operations.
+     */
     @RequestMapping(value = "/tokens/user/{userId}", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
@@ -74,6 +89,9 @@ public class UserController {
         return new TokenDto(token);
     }
 
+    /**
+     * Allows decrease balance operation for User.
+     */
     @RequestMapping(value = "/balance/decrease/user/{userId}", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody

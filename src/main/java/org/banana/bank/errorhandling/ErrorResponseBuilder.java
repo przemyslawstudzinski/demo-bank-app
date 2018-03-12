@@ -28,7 +28,8 @@ public final class ErrorResponseBuilder {
         ErrorResponse error = new ErrorResponse(VALIDATION_FAILED + errors.getErrorCount() + ERRORS);
 
         for (ObjectError objectError : errors.getAllErrors()) {
-            String fieldName = FIELD + APOSTROPHE + ((FieldError) objectError).getField() + APOSTROPHE + COLON + SPACE;
+            String fieldName = FIELD + APOSTROPHE
+                    + ((FieldError) objectError).getField() + APOSTROPHE + COLON + SPACE;
             error.addValidationError(fieldName + objectError.getDefaultMessage() + DOT);
         }
 

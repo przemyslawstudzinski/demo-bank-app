@@ -5,5 +5,8 @@ import org.banana.bank.domain.User;
 
 import java.util.UUID;
 
+/**
+ * Interface for CRUD operations on a repository for Users.
+ */
 public interface UserRepository extends JpaRepository<User, UUID> {
 }

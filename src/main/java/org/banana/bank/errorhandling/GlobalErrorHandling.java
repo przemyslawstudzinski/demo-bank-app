@@ -15,6 +15,9 @@ import javax.persistence.EntityNotFoundException;
 
 import static org.banana.bank.constant.ValidationMessages.INTERNAL_SERVER_ERROR;
 
+/**
+ * ErrorHandling for application.
+ */
 @ControllerAdvice
 public class GlobalErrorHandling {
 
