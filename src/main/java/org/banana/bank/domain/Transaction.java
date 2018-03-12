@@ -15,10 +15,10 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "operation")
+@Table(name = "transaction")
 public class Transaction extends BaseEntity {
 
-    @Column(name = "type")
+    @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
     @Getter
     @Setter
@@ -35,7 +35,7 @@ public class Transaction extends BaseEntity {
     @Setter
     private User user;
 
-    @Column(name = "created_date")
+    @Column(name = "created_date", nullable = false)
     @CreationTimestamp
     @Getter
     @Setter

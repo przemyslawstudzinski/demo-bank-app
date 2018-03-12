@@ -24,7 +24,6 @@ public enum TransactionType {
                 return transactionType;
             }
         }
-
         return null;
     }
 

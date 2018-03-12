@@ -48,7 +48,7 @@ public class GlobalErrorHandling {
     }
 
     @ExceptionHandler(BadTokenException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ResponseBody
     public ErrorResponse handleBadTokenException(BadTokenException exception) {
         return new ErrorResponse(exception.getMessage());

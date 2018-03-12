@@ -58,6 +58,11 @@ public class UserControllerIntegrationTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(body))
 				.andExpect(status().isOk());
+
+		mockMvc.perform(get("/balance/user/18ad5939-e928-4595-b190-371333322410"))
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.value", is(20.0)));
 	}
 
 	@Test
@@ -96,6 +101,11 @@ public class UserControllerIntegrationTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(body))
 				.andExpect(status().isOk());
+
+		mockMvc.perform(get("/balance/user/18ad5939-e928-4595-b190-371333322410"))
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.value", is(-10.0)));
 	}
 
 	@Test

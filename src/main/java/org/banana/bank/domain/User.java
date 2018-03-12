@@ -27,7 +27,7 @@ public class User extends BaseEntity {
     @Setter
     private BigDecimal balance;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user")
     @OrderBy("createdDate ASC")
     @Getter
     @Setter

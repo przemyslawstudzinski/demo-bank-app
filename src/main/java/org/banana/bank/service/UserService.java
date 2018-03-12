@@ -2,6 +2,7 @@ package org.banana.bank.service;
 
 import org.banana.bank.domain.Transaction;
 import org.banana.bank.exception.BadTokenException;
+import org.banana.bank.repository.TransactionRepository;
 import org.banana.bank.repository.UserRepository;
 import org.jboss.aerogear.security.otp.Totp;
 import org.jboss.aerogear.security.otp.api.Base32;
@@ -23,6 +24,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     /**
      * Allows increase balance for User.
@@ -62,7 +66,7 @@ public class UserService {
      * @param value decrease value
      * @param token valid token
      *
-     * @throws BadTokenException when token invalid
+     * @throws BadTokenException when invalid token
      *
      * @return updated User
      */
@@ -83,6 +87,7 @@ public class UserService {
         transaction.setType(type);
         transaction.setUser(user);
         transaction.setValue(value);
+        transactionRepository.save(transaction);
 
         user.setBalance(newBalance);
         user.addTransaction(transaction);
