@@ -49,7 +49,8 @@ public class UserController {
     @RequestMapping(value = "/balance/user/{userId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public BalanceDto getBalance(@PathVariable("userId") UUID userId) {
+    public BalanceDto getBalance(@PathVariable(value = "userId", required = false) UUID userId) {
+
         final User user = userRepository.getOne(userId);
         return userMapper.toBalanceDto(user);
     }

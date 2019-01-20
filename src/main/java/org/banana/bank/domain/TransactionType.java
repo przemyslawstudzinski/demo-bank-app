@@ -2,6 +2,8 @@ package org.banana.bank.domain;
 
 import lombok.Getter;
 
+import java.util.stream.Stream;
+
 public enum TransactionType {
     INCREASE("Increase"),
     DECREASE("Decrease");
@@ -19,6 +21,9 @@ public enum TransactionType {
      * @param name display name of enum value
      */
     public static TransactionType getByDisplayName(String name) {
+//        Stream.of(TransactionType.values()).filter(
+//                x -> x.getType().equalsIgnoreCase(name)).findFirst().orElse(null);
+
         for (TransactionType transactionType : TransactionType.values()) {
             if (transactionType.getType().equalsIgnoreCase(name)) {
                 return transactionType;
