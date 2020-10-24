@@ -1,6 +1,6 @@
-# BANANA BEST BANK 
-
-Banana Best Bank REST spring boot application.
+# DEMO BANK APP
+ 
+Demo Bank REST spring boot application.
 Application allows check balance, increase and decrease balance and generates one-time passwords using 
 aerogear-otp-java library `https://github.com/aerogear/aerogear-otp-java`. Token is valid about 40s. 
 
